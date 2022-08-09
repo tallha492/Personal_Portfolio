@@ -1,5 +1,6 @@
 import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { db } from "../config";
 
 const Contact = () => {
@@ -7,9 +8,13 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const HandleContact = async () => {
+    if (!name || !email || !message) {
+      toast.error("Fill The Form Correctly!");
+    }
     const collectionRef = collection(db, "Contact Form");
     const data = { name: name, email: email, message: message };
-    await addDoc(collectionRef, data);
+    const res = await addDoc(collectionRef, data);
+    toast.success("Thanks For Contacting me");
     window.location.reload();
   };
   return (
