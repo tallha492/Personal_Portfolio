@@ -1,28 +1,45 @@
-import { addDoc, collection } from "firebase/firestore";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { toast } from "react-toastify";
-import { db } from "../config";
-
+import emailjs from "@emailjs/browser";
 const Contact = () => {
+  const form = useRef();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const HandleContact = async () => {
     if (!name || !email || !message) {
       toast.error("Fill The Form Correctly!");
+      window.location.reload();
     }
-    const collectionRef = collection(db, "Contact Form");
-    const data = { name: name, email: email, message: message };
-    const res = await addDoc(collectionRef, data);
-    toast.success("Thanks For Contacting me");
-    window.location.reload();
+    var templateParams = {
+      name: name,
+      email: email,
+      message: message,
+    };
+
+    emailjs
+      .send(
+        "service_86oc4ta",
+        "template_4p3gwo3",
+        templateParams,
+        "2hebtHntQxKq3Ls6c"
+      )
+      .then(
+        function (response) {
+          toast.success("SUCCESS!", response.text);
+          window.location.reload();
+        },
+        function (error) {
+          toast.error("FAILED...", error);
+        }
+      );
   };
   return (
     <div
       name="contact"
       className="w-full h-screen bg-[#0a192f] flex justify-center items-center p-4"
     >
-      <form className="flex flex-col max-w-[600px] w-full">
+      <form ref={form} className="flex flex-col max-w-[600px] w-full">
         <div className="pb-8">
           <p className="text-4xl font-bold inline border-b-4 border-pink-600 text-gray-300">
             Contact
