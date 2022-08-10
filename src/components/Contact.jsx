@@ -6,7 +6,7 @@ const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const HandleContact = async () => {
+  const HandleContact = () => {
     if (!name || !email || !message) {
       toast.error("Fill The Form Correctly!");
     }
