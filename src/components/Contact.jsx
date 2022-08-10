@@ -9,7 +9,6 @@ const Contact = () => {
   const HandleContact = async () => {
     if (!name || !email || !message) {
       toast.error("Fill The Form Correctly!");
-      window.location.reload();
     }
     var templateParams = {
       name: name,
@@ -27,7 +26,9 @@ const Contact = () => {
       .then(
         function (response) {
           toast.success("SUCCESS!", response.text);
-          window.location.reload();
+          setName("");
+          setEmail("");
+          setMessage("");
         },
         function (error) {
           toast.error("FAILED...", error);
