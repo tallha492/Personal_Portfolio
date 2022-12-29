@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <div>
+    <>
       <ToastContainer />
       <Navbar />
       <Home />
@@ -17,7 +17,7 @@ function App() {
       <Skills />
       <Work />
       <Contact />
-    </div>
+    </>
   );
 }
 

@@ -7,33 +7,34 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const HandleContact = () => {
-    if (!name || !email || !message) {
+    if (name && email && message) {
+      var templateParams = {
+        name: name,
+        email: email,
+        message: message,
+      };
+
+      emailjs
+        .send(
+          "service_86oc4ta",
+          "template_4p3gwo3",
+          templateParams,
+          "2hebtHntQxKq3Ls6c"
+        )
+        .then(
+          function (response) {
+            toast.success("SUCCESS!", response.text);
+            setName("");
+            setEmail("");
+            setMessage("");
+          },
+          function (error) {
+            toast.error("FAILED...", error);
+          }
+        );
+    } else {
       toast.error("Fill The Form Correctly!");
     }
-    var templateParams = {
-      name: name,
-      email: email,
-      message: message,
-    };
-
-    emailjs
-      .send(
-        "service_86oc4ta",
-        "template_4p3gwo3",
-        templateParams,
-        "2hebtHntQxKq3Ls6c"
-      )
-      .then(
-        function (response) {
-          toast.success("SUCCESS!", response.text);
-          setName("");
-          setEmail("");
-          setMessage("");
-        },
-        function (error) {
-          toast.error("FAILED...", error);
-        }
-      );
   };
   return (
     <div
